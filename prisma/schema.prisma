@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Material {
+  id        String   @id @default(uuid())
+  name      String   
+  type      String   // "Consumable" atau "Asset"
+  unit      String   
+  stock     Int      @default(0)
+  transactions Transaction[]
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  name      String   
+  status    String   @default("ONGOING")
+  createdAt DateTime @default(now())
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  type        String   // "IN", "OUT", "RETURN"
+  quantity    Int
+  notes       String?  
+  materialId  String
+  material    Material @relation(fields: [materialId], references: [id])
+  projectId   String?  
+  project     Project? @relation(fields: [projectId], references: [id])
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String   // Disimpan plain-text saja untuk tutorial ini
+  role      String   // "ADMIN" atau "MANDOR"
+}
