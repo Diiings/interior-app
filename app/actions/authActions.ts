@@ -18,15 +18,36 @@ export async function login(prevState: any, formData: FormData) {
     return { error: 'Username atau Password salah!' }; 
   }
 
-  // Jika sukses, set cookies
-  (await cookies()).set('user_role', user.role);
-  (await cookies()).set('user_name', user.username);
+  const oneDay = 24 * 60 * 60 * 1000; // 24 Jam dalam milidetik
+  
+  const cookieStore = await cookies();
+
+  cookieStore.set('user_role', user.role, {
+    maxAge: oneDay,    // Expire dalam 1 hari (detik)
+    httpOnly: true,    // Tidak bisa diakses lewat JavaScript browser (Anti XSS)
+    secure: process.env.NODE_ENV === 'production', // Hanya HTTPS di Production
+    path: '/',         // Berlaku di seluruh halaman
+    sameSite: 'strict' // Mencegah CSRF attack
+  });
+
+  // 2. Simpan Username (Untuk ditampilkan di Sidebar)
+  cookieStore.set('user_name', user.username, {
+    maxAge: oneDay,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    sameSite: 'strict'
+  });
 
   redirect('/dashboard');
 }
 
 export async function logout() {
-  (await cookies()).delete('user_role');
-  (await cookies()).delete('user_name');
+  const cookieStore = await cookies();
+  
+  // Hapus cookie saat logout
+  cookieStore.delete('user_role');
+  cookieStore.delete('user_name');
+  
   redirect('/');
 }
