@@ -29,7 +29,8 @@ model Transaction {
   createdAt   DateTime @default(now())
   type        String   // "IN", "OUT", "RETURN"
   quantity    Int
-  notes       String?  
+  notes       String?
+  status      String   @default("PENDING") // "PENDING" (Dikirim), "DONE" (Diterima)
   materialId  String
   material    Material @relation(fields: [materialId], references: [id])
   projectId   String?  

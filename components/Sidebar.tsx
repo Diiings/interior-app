@@ -69,9 +69,9 @@ export default function Sidebar({ role, username }: SidebarProps) {
             <nav className="p-4 space-y-2">
               <NavItem href="/dashboard" icon={<LayoutDashboard size={20}/>} label="Overview" active={pathname === '/dashboard'} onClick={handleLinkClick} />
               <NavItem href="/dashboard/materials" icon={<Warehouse size={20}/>} label="Gudang Material" active={pathname.includes('/materials')} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/projects" icon={<FolderKanban size={20}/>} label="Proyek Aktif" active={pathname.includes('/projects')} onClick={handleLinkClick} />
+              <NavItem href="/dashboard/projects" icon={<FolderKanban size={20}/>} label="Lokasi Proyek" active={pathname.includes('/projects')} onClick={handleLinkClick} />
               <NavItem href="/dashboard/transactions" icon={<Truck size={20}/>} label="Logistik / Surat Jalan" active={pathname.includes('/transactions')} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/logs" icon={<History size={20}/>} label="Riwayat Transaksi" active={pathname.includes('/logs')} onClick={handleLinkClick} />
+              <NavItem href="/dashboard/logs" icon={<History size={20}/>} label="Riwayat" active={pathname.includes('/logs')} onClick={handleLinkClick} />
             </nav>
           </div>
 

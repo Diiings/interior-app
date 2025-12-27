@@ -56,3 +56,15 @@ export async function createTransaction(formData: FormData) {
   revalidatePath('/dashboard/transactions');
   revalidatePath('/dashboard/materials'); // Update stok di halaman gudang juga
 }
+
+export async function updateStatus(formData: FormData) {
+  const id = formData.get('id') as string;
+  const status = formData.get('status') as string;
+
+  await prisma.transaction.update({
+    where: { id },
+    data: { status } // Update status baru
+  });
+
+  revalidatePath('/dashboard/logs');
+}
