@@ -47,8 +47,8 @@ export default function Sidebar({ role, username }: SidebarProps) {
           <div>
             {/* Header Sidebar */}
             <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-              <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
-                <Warehouse className="text-yellow-500"/> 
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <Warehouse /> 
                 Sto<span className="text-yellow-500">co</span>
               </h2>
               {/* Tombol Close (X) di dalam sidebar khusus HP */}
