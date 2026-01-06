@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: '%s | InteriorERP', // Format otomatis untuk halaman lain
-    default: 'InteriorERP - Sistem Kontraktor'
+    default: 'Stoco - Smart Inventory'
   },
   description: "Sistem Manajemen Gudang & Proyek Interior",
 };

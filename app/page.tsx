@@ -18,11 +18,14 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="bg-yellow-500 p-3 rounded-full text-slate-900">
-              <Warehouse size={32} />
+              <Warehouse className='text-yellow-500' size={32} />
             </div>
+            <h1 className="text-3xl font-bold text-white tracking-wide">
+              Sto<span className="text-yellow-500">co</span>.
+            </h1>
+
+            <p className="text-slate-400 text-sm mt-2">Smart Stock Control System</p>
           </div>
-          <h1 className="text-2xl font-bold">Login InteriorERP</h1>
-          <p className="text-gray-500 text-sm">Masuk untuk mengelola proyek</p>
         </div>
 
         {/* MENAMPILKAN ERROR JIKA ADA */}
@@ -37,12 +40,12 @@ export default function LoginPage() {
         <form action={formAction} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Username</label>
-            <input name="username" type="text" placeholder="admin / mandor" className="w-full border p-3 rounded-lg bg-slate-50 outline-none focus:ring-2 focus:ring-yellow-500" required />
+            <input name="username" type="text" placeholder="Masukkan username" className="w-full border p-3 rounded-lg bg-slate-50 outline-none focus:ring-2 focus:ring-yellow-500" required />
           </div>
           
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Password</label>
-            <input name="password" type="password" placeholder="***" className="w-full border p-3 rounded-lg bg-slate-50 outline-none focus:ring-2 focus:ring-yellow-500" required />
+            <input name="password" type="password" placeholder="Masukkan password" className="w-full border p-3 rounded-lg bg-slate-50 outline-none focus:ring-2 focus:ring-yellow-500" required />
           </div>
 
           <button 
