@@ -20,8 +20,8 @@ export default function LoginPage() {
             <div className="bg-yellow-500 p-3 rounded-full text-slate-900">
               <Warehouse className='text-yellow-500' size={32} />
             </div>
-            <h1 className="text-3xl font-bold text-white tracking-wide">
-              Sto<span className="text-yellow-500">co</span>.
+            <h1 className="text-3xl font-bold text-yellow-500 tracking-wide">
+              Stoco.
             </h1>
 
             <p className="text-slate-400 text-sm mt-2">Smart Stock Control System</p>
