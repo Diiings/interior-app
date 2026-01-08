@@ -53,7 +53,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-6 text-center">
-        <h3 className="text-blue-800 font-bold text-lg mb-2">👋 Selamat Datang di InteriorERP</h3>
+        <h3 className="text-blue-800 font-bold text-lg mb-2">👋 Selamat Datang di Stoco.</h3>
         <p className="text-blue-600">
           Mulai dengan menambahkan data material bangunan di menu <strong>Gudang Material</strong>.
         </p>

@@ -49,7 +49,7 @@ export default function Sidebar({ role, username }: SidebarProps) {
             <div className="p-6 border-b border-slate-800 flex justify-between items-center">
               <h2 className="text-2xl font-bold flex items-center gap-2">
                 <Warehouse /> 
-                Sto<span className="text-yellow-500">co</span>
+                Stoco
               </h2>
               {/* Tombol Close (X) di dalam sidebar khusus HP */}
               <button onClick={() => setIsOpen(false)} className="md:hidden text-slate-400 hover:text-white">
