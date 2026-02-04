@@ -10,17 +10,15 @@ import {
   History, 
   LogOut, 
   Warehouse,
-  UserCircle,
-  X // Tambahkan icon X untuk mobile close button
+  UserCircle
 } from 'lucide-react';
 
-// 1. TAMBAHKAN DEFINISI TIPE PROPS DI SINI
+// PENTING: Definisi tipe data agar tidak error saat deploy ke Vercel
 interface SidebarProps {
   role?: string;
   username?: string;
 }
 
-// 2. TERIMA PROPS DI SINI (Default value jika kosong)
 export default function Sidebar({ role = "Admin", username = "User" }: SidebarProps) {
   const pathname = usePathname();
 
@@ -35,23 +33,23 @@ export default function Sidebar({ role = "Admin", username = "User" }: SidebarPr
   return (
     <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen sticky top-0 border-r border-slate-800 shadow-xl z-20">
       
-      {/* HEADER BRANDING */}
-      <div className="p-6 border-b border-slate-800 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-            <div className="bg-slate-800 p-2 rounded-lg">
-            <Warehouse className="text-yellow-500" size={24} />
-            </div>
-            <div>
-            <h1 className="text-xl font-bold tracking-wide">
-                Sto<span className="text-yellow-500">co</span>.
-            </h1>
-            <p className="text-[10px] text-slate-400 uppercase tracking-wider">Inventory System</p>
-            </div>
+      {/* 1. HEADER BRANDING */}
+      <div className="p-6 border-b border-slate-800 flex items-center gap-3">
+        <div className="bg-slate-800 p-2 rounded-lg">
+          <Warehouse className="text-yellow-500" size={24} />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold tracking-wide">
+            Sto<span className="text-yellow-500">co</span>.
+          </h1>
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Inventory System</p>
         </div>
       </div>
 
-      {/* MENU NAVIGASI */}
+      {/* 2. MENU NAVIGASI */}
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        
+        {/* Label Kecil */}
         <p className="text-xs font-bold text-slate-500 px-3 mb-2 uppercase">Menu Utama</p>
 
         {menuItems.map((item) => {
@@ -73,18 +71,17 @@ export default function Sidebar({ role = "Admin", username = "User" }: SidebarPr
         })}
       </nav>
 
-      {/* 3. PROFILE & LOGOUT (Gunakan Props Username & Role di sini) */}
+      {/* 3. PROFILE & LOGOUT (Footer Sidebar) */}
       <div className="p-4 border-t border-slate-800 bg-slate-900/50">
         <div className="flex items-center gap-3 mb-4 px-2">
           <UserCircle size={32} className="text-slate-400" />
           <div>
-            {/* Tampilkan Nama & Role dari Database */}
             <p className="text-sm font-bold text-white capitalize">{username}</p>
             <p className="text-xs text-yellow-500 uppercase">{role}</p>
           </div>
         </div>
         
-        <form action="/auth/logout">
+        <form action="/auth/logout"> 
           <button className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-red-600/10 hover:text-red-500 text-slate-400 py-2.5 rounded-lg transition-all text-sm font-bold border border-slate-700 hover:border-red-500/50">
             <LogOut size={16} /> Keluar Sistem
           </button>

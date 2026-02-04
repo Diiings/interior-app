@@ -1,4 +1,4 @@
-import { prisma } from '../../lib/prisma'; // Sesuaikan path import
+import { prisma } from '../../lib/prisma';
 import { Package, MapPin, AlertTriangle, ArrowRight, Truck, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
               <Truck size={16} /> Buat Surat Jalan Baru
             </Link>
           </div>
-          {/* Hiasan Background (Lingkaran transparan) */}
+          {/* Hiasan Background */}
           <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
         </div>
 
