@@ -1,108 +1,86 @@
-'use client'; // Wajib, karena pakai useState
+'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Untuk cek link aktif
-import { logout } from '../app/actions/authActions'; 
-import { LayoutDashboard, Warehouse, FolderKanban, History, LogOut, UserCircle, Truck, Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { 
+  LayoutDashboard, 
+  Package, 
+  MapPin, 
+  Truck, 
+  History, 
+  LogOut, 
+  Warehouse,
+  UserCircle
+} from 'lucide-react';
 
-interface SidebarProps {
-  role: string;
-  username: string;
-}
+export default function Sidebar() {
+  const pathname = usePathname();
 
-export default function Sidebar({ role, username }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // Untuk highlight menu aktif
-
-  // Fungsi tutup menu saat link diklik (khusus mobile)
-  const handleLinkClick = () => setIsOpen(false);
+  const menuItems = [
+    { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Gudang Material', href: '/dashboard/materials', icon: Package },
+    { name: 'Lokasi Proyek', href: '/dashboard/projects', icon: MapPin },
+    { name: 'Surat Jalan', href: '/dashboard/transactions', icon: Truck },
+    { name: 'Riwayat', href: '/dashboard/logs', icon: History },
+  ];
 
   return (
-    <>
-      {/* 1. TOMBOL HAMBURGER (Hanya muncul di Mobile) */}
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg md:hidden hover:bg-slate-800"
-      >
-        <Menu size={24} />
-      </button>
+    <aside className="w-64 bg-slate-900 text-white flex flex-col h-screen sticky top-0 border-r border-slate-800 shadow-xl z-20">
+      
+      {/* 1. HEADER BRANDING */}
+      <div className="p-6 border-b border-slate-800 flex items-center gap-3">
+        <div className="bg-slate-800 p-2 rounded-lg">
+          <Warehouse className="text-yellow-500" size={24} />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold tracking-wide">
+            Sto<span className="text-yellow-500">co</span>.
+          </h1>
+          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Inventory System</p>
+        </div>
+      </div>
 
-      {/* 2. OVERLAY GELAP (Background saat menu buka di HP) */}
-      {isOpen && (
-        <div 
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
-        />
-      )}
+      {/* 2. MENU NAVIGASI */}
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        
+        {/* Label Kecil */}
+        <p className="text-xs font-bold text-slate-500 px-3 mb-2 uppercase">Menu Utama</p>
 
-      {/* 3. SIDEBAR UTAMA */}
-      <aside className={`
-        fixed top-0 left-0 h-full w-64 bg-slate-900 text-white shadow-xl z-50 
-        transform transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        md:translate-x-0 
-      `}>
-        <div className="flex flex-col h-full justify-between">
+        {menuItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${
+                isActive
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50 translate-x-1'
+                  : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <item.icon size={20} className={isActive ? 'text-white' : 'text-slate-400 group-hover:text-yellow-500 transition-colors'} />
+              <span className="text-sm font-medium">{item.name}</span>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* 3. PROFILE & LOGOUT (Footer Sidebar) */}
+      <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+        <div className="flex items-center gap-3 mb-4 px-2">
+          <UserCircle size={32} className="text-slate-400" />
           <div>
-            {/* Header Sidebar */}
-            <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <Warehouse /> 
-                Stoco
-              </h2>
-              {/* Tombol Close (X) di dalam sidebar khusus HP */}
-              <button onClick={() => setIsOpen(false)} className="md:hidden text-slate-400 hover:text-white">
-                <X size={24} />
-              </button>
-            </div>
-
-            {/* Info User */}
-            <div className="px-6 py-4 bg-slate-800/50 flex items-center gap-3">
-              <UserCircle size={32} className="text-slate-400" />
-              <div>
-                <p className="font-bold text-sm capitalize">{username}</p>
-                <p className="text-xs text-yellow-500 font-bold tracking-wider">{role}</p>
-              </div>
-            </div>
-
-            {/* Navigasi */}
-            <nav className="p-4 space-y-2">
-              <NavItem href="/dashboard" icon={<LayoutDashboard size={20}/>} label="Overview" active={pathname === '/dashboard'} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/materials" icon={<Warehouse size={20}/>} label="Gudang Material" active={pathname.includes('/materials')} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/projects" icon={<FolderKanban size={20}/>} label="Lokasi Proyek" active={pathname.includes('/projects')} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/transactions" icon={<Truck size={20}/>} label="Logistik / Surat Jalan" active={pathname.includes('/transactions')} onClick={handleLinkClick} />
-              <NavItem href="/dashboard/logs" icon={<History size={20}/>} label="Riwayat" active={pathname.includes('/logs')} onClick={handleLinkClick} />
-            </nav>
-          </div>
-
-          {/* Logout */}
-          <div className="p-4 border-t border-slate-800">
-            <form action={logout}>
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-900/20 hover:text-red-300 rounded-lg transition">
-                <LogOut size={20} />
-                <span>Keluar</span>
-              </button>
-            </form>
+            <p className="text-sm font-bold text-white">Administrator</p>
+            <p className="text-xs text-yellow-500">Super User</p>
           </div>
         </div>
-      </aside>
-    </>
-  );
-}
-
-// Komponen Kecil untuk Link agar kodingan rapi
-function NavItem({ href, icon, label, active, onClick }: any) {
-  return (
-    <Link 
-      href={href} 
-      onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-        active ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </Link>
+        
+        <form action="/auth/logout"> {/* Sesuaikan dengan route logout Anda */}
+          <button className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-red-600/10 hover:text-red-500 text-slate-400 py-2.5 rounded-lg transition-all text-sm font-bold border border-slate-700 hover:border-red-500/50">
+            <LogOut size={16} /> Keluar Sistem
+          </button>
+        </form>
+      </div>
+    </aside>
   );
 }
