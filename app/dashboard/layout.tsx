@@ -1,22 +1,34 @@
-import { cookies } from 'next/headers'; 
-import Sidebar from '../../components/Sidebar'; // Import Sidebar Client Component
+import Sidebar from '../../components/Sidebar';
+import { cookies } from 'next/headers'; // PERBAIKAN: Gunakan cookies bawaan Next.js
+import { redirect } from 'next/navigation';
 
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  // Ambil data session di Server
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // 1. Ambil Cookie Store
   const cookieStore = await cookies();
-  const role = cookieStore.get('user_role')?.value || 'GUEST';
-  const username = cookieStore.get('user_name')?.value || 'User';
+  
+  // 2. Ambil data user dari cookie yang diset saat login (authActions.ts)
+  const role = cookieStore.get('user_role')?.value;
+  const username = cookieStore.get('user_name')?.value;
+
+  // 3. Cek Keamanan: Jika tidak ada role atau username, tendang ke login
+  if (!role || !username) {
+    redirect('/');
+  }
 
   return (
     <div className="flex min-h-screen bg-slate-50">
       
-      {/* Panggil Sidebar dan oper datanya */}
+      {/* 4. Kirim data role & username ke Sidebar agar profilnya sesuai */}
       <Sidebar role={role} username={username} />
 
-      {/* MAIN CONTENT */}
-      {/* md:ml-64 artinya: Margin kiri hanya ada di Desktop. Di HP margin 0 (full width) */}
-      <main className="flex-1 p-8 md:ml-64 pt-20 md:pt-8 transition-all duration-300">
-        {children}
+      <main className="flex-1 p-8 overflow-y-auto h-screen">
+        <div className="max-w-7xl mx-auto">
+          {children}
+        </div>
       </main>
       
     </div>
