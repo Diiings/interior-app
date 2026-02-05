@@ -12,6 +12,7 @@ import {
   Warehouse,
   UserCircle
 } from 'lucide-react';
+import { logout } from '@/app/actions/authActions';
 
 // PENTING: Definisi tipe data agar tidak error saat deploy ke Vercel
 interface SidebarProps {
@@ -81,7 +82,7 @@ export default function Sidebar({ role = "Admin", username = "User" }: SidebarPr
           </div>
         </div>
         
-        <form action="/auth/logout"> 
+        <form action={logout}> 
           <button className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-red-600/10 hover:text-red-500 text-slate-400 py-2.5 rounded-lg transition-all text-sm font-bold border border-slate-700 hover:border-red-500/50">
             <LogOut size={16} /> Keluar Sistem
           </button>
